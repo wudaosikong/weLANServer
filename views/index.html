@@ -1,0 +1,26 @@
+<!doctype html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" id="viewport" content="width=device-width, initial-scale=1">
+        <link rel="shortcut icon" href="favicon.png" type="image/x-icon">
+        <title>爱库存局域网文件传输平台</title>
+        <style>
+        .box{font-size: 15px;}
+        .title{color: blueviolet;}
+        </style>
+    </head>
+    <body style=" text-align:center;">
+        <div>
+            <h2>用户登录</h2>
+        </div>
+        <form action="/user/login" method="post">
+            <span class="title">用户名</span> <input class="box" type="text" name="user_name" style="margin-bottom: 10px;">
+            <br>
+            <span class="title">密码</span> <input class="box" type="password" name="password" style="margin-top: 10px;margin-bottom: 10px;">
+            <br>
+            <input type="submit" value="登录" style="margin-top: 10px;margin-bottom: 10px;">
+        </form>
+        <a href="/user/register">我要注册</a>
+    </body>
+</html>
