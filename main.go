@@ -61,6 +61,8 @@ func newApp() *iris.Application {
 			Columns: false,
 		}))
 
+	app.HandleDir("/static","./views")
+
 	//注册视图文件
 	//app.RegisterView(iris.HTML("./static", ".html"))
 	app.RegisterView(iris.HTML("./views",".html"))

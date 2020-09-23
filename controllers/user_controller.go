@@ -1,13 +1,13 @@
 package controllers
 
 import (
+	"encoding/json"
 	"github.com/kataras/iris/v12"
 	"github.com/kataras/iris/v12/mvc"
-	"weLANServer/services"
 	"github.com/kataras/iris/v12/sessions"
-	"encoding/json"
-	"weLANServer/utils"
 	"weLANServer/models"
+	"weLANServer/services"
+	"weLANServer/utils"
 )
 
 /**
@@ -42,7 +42,7 @@ type UserLogin struct {
 func (ac *UserController) GetSingout() mvc.Result {
 
 	//删除session，下次需要从新登录
-	ac.Session.Delete(USER);
+	ac.Session.Delete(USER)
 	return mvc.Response{
 		Object: map[string]interface{}{
 			"status":  utils.RECODE_OK,
@@ -127,12 +127,12 @@ func (ac *UserController) GetInfo() mvc.Result {
  * 接口：/User/login
  */
 func (ac *UserController) PostLogin(context iris.Context) mvc.Result {
-	
+
 	iris.New().Logger().Info(" user login ")
 
 	//var userLogin UserLogin
 	//ac.Ctx.ReadJSON(&userLogin)
-	var userLogin=&UserLogin{context.FormValue("user_name"),context.FormValue("password")}
+	var userLogin = &UserLogin{context.FormValue("user_name"), context.FormValue("password")}
 
 	//数据参数检验
 	if userLogin.UserName == "" || userLogin.Password == "" {
@@ -174,4 +174,33 @@ func (ac *UserController) PostLogin(context iris.Context) mvc.Result {
 		Text: "登录成功",
 	}
 
+}
+
+//用户注册页面配置、渲染
+func (ac *UserController) GetRegister() mvc.View {
+	//用户注册模板配置
+	registerView := mvc.View{
+		//文件名,视图文件必须放在views文件夹下,因为这是app := iris.Default()默认的
+		//当然你也可以自己设置存放位置
+		Name: "user/register.html",
+		//传入的数据
+		Data: map[string]interface{}{
+		},
+	}
+	return registerView
+}
+
+func (ac *UserController) PostRegisterSend() mvc.View {
+	ac.Service.
+	//用户注册结果模板配置
+	registerResultView := mvc.View{
+		//文件名,视图文件必须放在views文件夹下,因为这是app := iris.Default()默认的
+		//当然你也可以自己设置存放位置
+		Name: "user/registerResult.html",
+		//传入的数据
+		Data: map[string]interface{}{
+			"Title":
+		},
+	}
+	return registerResultView
 }

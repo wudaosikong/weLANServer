@@ -1,0 +1,37 @@
+<!doctype html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" id="viewport" content="width=device-width, initial-scale=1">
+        <link rel="shortcut icon" href="favicon.png" type="image/x-icon">
+        <title>爱库存局域网文件传输平台</title>
+        <style type="text/css">
+            form{line-height:3em;font-size:16px;font-weight:bold;}
+            form>input{padding:3px 3px;font-size:16px;border:1px solid #888888;border-radius:5px}
+            form>span{color: blueviolet;}
+            form>.ok,h2{color: #008800;}
+            form>input:valid+.ok{display: inline;}
+            form>input:invalid+.ok{display: none;}
+        </style>
+    </head>
+    <body style=" text-align:center;">
+        <div>
+            <h1>爱库存局域网文件传输平台</h1>
+        </div>
+        <div>
+            <h2>用户注册</h2>
+        </div>
+        <form action="/user/register/send" method="post">
+            <span>用户名</span> <input type="text" name="user_name" pattern="[0-9a-zA-Z]{4,12}" placeholder="4-12位数字、英文字母" required>
+            <span class="ok">ok</span>
+            <br>
+            <span>姓名</span> <input type="text" name="user_name" required>
+            <span class="ok">ok</span>
+            <br>
+            <span>密码</span> <input type="password" name="password" pattern="[0-9a-zA-Z]{6,16}" placeholder="6-16位数字、英文字母" required>
+            <span class="ok">ok</span>
+            <br>
+            <input type="submit" value="注册">
+        </form>
+    </body>
+</html>

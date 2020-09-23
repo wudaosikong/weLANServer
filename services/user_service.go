@@ -13,7 +13,7 @@ import (
 type UserService interface {
 	//通过用户用户名+密码 获取用户实体 如果查询到，返回用户实体，并返回true
 	//否则 返回 nil ，false
-		GetByUserNameAndPassword(username, password string) (models.User, bool)
+	GetByUserNameAndPassword(username, password string) (models.User, bool)
 
 	//获取用户总数
 	GetUserCount() (int64, error)
