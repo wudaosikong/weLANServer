@@ -179,7 +179,7 @@ func (ac *UserController) PostLogin(context iris.Context) mvc.Result {
 //用户注册页面配置、渲染
 func (ac *UserController) GetRegister() mvc.View {
 	//用户注册模板配置
-	registerView := mvc.View{
+	var registerView = mvc.View{
 		//文件名,视图文件必须放在views文件夹下,因为这是app := iris.Default()默认的
 		//当然你也可以自己设置存放位置
 		Name: "user/register.html",
@@ -190,16 +190,23 @@ func (ac *UserController) GetRegister() mvc.View {
 	return registerView
 }
 
-func (ac *UserController) PostRegisterSend() mvc.View {
-	ac.Service.
+func (ac *UserController) PostRegisterSend(context iris.Context) mvc.View {
+	var registerResult string
+	var userRegister = &models.User{UserName: context.FormValue("user_name"),Pwd: context.FormValue("password"),Name: context.FormValue("name")}
+	exist := ac.Service.GetByUserName(userRegister.UserName)
+	if exist{
+		registerResult="此用户名已注册，请注册其他用户名！"
+	}else if ac.Service.AddUser(userRegister){
+		registerResult="用户注册成功！"
+	}
 	//用户注册结果模板配置
-	registerResultView := mvc.View{
+	var registerResultView = mvc.View{
 		//文件名,视图文件必须放在views文件夹下,因为这是app := iris.Default()默认的
 		//当然你也可以自己设置存放位置
 		Name: "user/registerResult.html",
 		//传入的数据
 		Data: map[string]interface{}{
-			"Title":
+			"MyMessage":registerResult,
 		},
 	}
 	return registerResultView
