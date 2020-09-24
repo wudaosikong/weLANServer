@@ -1,8 +1,9 @@
 package datasource
 
 import (
-	_ "github.com/go-sql-driver/mysql" //不能忘记导入
 	"weLANServer/models"
+
+	_ "github.com/go-sql-driver/mysql" //不能忘记导入
 	"xorm.io/xorm"
 )
 
@@ -12,7 +13,7 @@ import (
 func NewMysqlEngine() *xorm.Engine {
 
 	//数据库引擎
-	engine, err := xorm.NewEngine("mysql", "root:admin666@/myCms?charset=utf8")
+	engine, err := xorm.NewEngine("mysql", "root:admin666@/weLANServer?charset=utf8")
 
 	//根据实体创建表
 	//err = engine.CreateTables(new(model.User))
@@ -26,8 +27,9 @@ func NewMysqlEngine() *xorm.Engine {
 	 * 自动警告字段的默认值，是否为空信息在模型和数据库之间不匹配的情况
 	 */
 	//Sync2是Sync的基础上优化的方法
-	err = engine.Sync2(new(
-	models.Permission),
+	err = engine.Sync2(
+		new(models.Service),
+		new(models.Permission),
 		new(models.User),
 		new(models.UserPermission))
 

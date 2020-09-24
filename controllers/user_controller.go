@@ -2,12 +2,14 @@ package controllers
 
 import (
 	"encoding/json"
-	"github.com/kataras/iris/v12"
-	"github.com/kataras/iris/v12/mvc"
-	"github.com/kataras/iris/v12/sessions"
+	"fmt"
 	"weLANServer/models"
 	"weLANServer/services"
 	"weLANServer/utils"
+
+	"github.com/kataras/iris/v12"
+	"github.com/kataras/iris/v12/mvc"
+	"github.com/kataras/iris/v12/sessions"
 )
 
 /**
@@ -184,20 +186,21 @@ func (ac *UserController) GetRegister() mvc.View {
 		//当然你也可以自己设置存放位置
 		Name: "user/register.html",
 		//传入的数据
-		Data: map[string]interface{}{
-		},
+		Data: map[string]interface{}{},
 	}
 	return registerView
 }
 
 func (ac *UserController) PostRegisterSend(context iris.Context) mvc.View {
 	var registerResult string
-	var userRegister = &models.User{UserName: context.FormValue("user_name"),Pwd: context.FormValue("password"),Name: context.FormValue("name")}
+
+	userRegister := &models.User{UserName: context.FormValue("user_name"), Pwd: context.FormValue("password"), MyName: context.FormValue("name")}
+	fmt.Println(userRegister.UserName)
 	exist := ac.Service.GetByUserName(userRegister.UserName)
-	if exist{
-		registerResult="此用户名已注册，请注册其他用户名！"
-	}else if ac.Service.AddUser(userRegister){
-		registerResult="用户注册成功！"
+	if exist {
+		registerResult = "此用户名已注册，请注册其他用户名！"
+	} else if ac.Service.AddUser(userRegister) {
+		registerResult = "用户注册成功！"
 	}
 	//用户注册结果模板配置
 	var registerResultView = mvc.View{
@@ -206,7 +209,7 @@ func (ac *UserController) PostRegisterSend(context iris.Context) mvc.View {
 		Name: "user/registerResult.html",
 		//传入的数据
 		Data: map[string]interface{}{
-			"MyMessage":registerResult,
+			"MyMessage": registerResult,
 		},
 	}
 	return registerResultView

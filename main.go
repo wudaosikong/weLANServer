@@ -1,16 +1,17 @@
 package main
 
 import (
-	"github.com/kataras/iris/v12"
-	"github.com/kataras/iris/v12/middleware/logger"
-	"github.com/kataras/iris/v12/middleware/recover"
-	"github.com/kataras/iris/v12/mvc"
-	"github.com/kataras/iris/v12/sessions"
 	"time"
 	"weLANServer/config"
 	"weLANServer/controllers"
 	"weLANServer/datasource"
 	"weLANServer/services"
+
+	"github.com/kataras/iris/v12"
+	"github.com/kataras/iris/v12/middleware/logger"
+	"github.com/kataras/iris/v12/middleware/recover"
+	"github.com/kataras/iris/v12/mvc"
+	"github.com/kataras/iris/v12/sessions"
 )
 
 func main() {
@@ -29,7 +30,7 @@ func main() {
 	config := config.InitConfig()
 	addr := ":" + config.Port
 	app.Run(
-		iris.Addr(addr),                               //在端口8080进行监听
+		iris.Addr(addr), //在端口8080进行监听
 		iris.WithoutServerError(iris.ErrServerClosed), //无服务错误提示
 		iris.WithOptimizations,                        //对json数据序列化更快的配置
 	)
@@ -56,16 +57,16 @@ func newApp() *iris.Application {
 			// 是否记录请求路径,默认true
 			Path: true,
 			// 是否开启查询追加,默认false
-			Query: true,
+			Query: false,
 			//是否以列模式显示,默认false
 			Columns: false,
 		}))
 
-	app.HandleDir("/static","./views")
+	app.HandleDir("/static", "./views")
 
 	//注册视图文件
 	//app.RegisterView(iris.HTML("./static", ".html"))
-	app.RegisterView(iris.HTML("./views",".html"))
+	app.RegisterView(iris.HTML("./views", ".html"))
 	app.Get("/", func(context iris.Context) {
 		context.View("index.html")
 	})
